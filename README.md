@@ -1,4 +1,4 @@
-smart-writer
-============
+appengine-skeleton
+=============================
 
-Writing checking and analysis tool
+This is a generated application from the appengine-skeleton archetype.
