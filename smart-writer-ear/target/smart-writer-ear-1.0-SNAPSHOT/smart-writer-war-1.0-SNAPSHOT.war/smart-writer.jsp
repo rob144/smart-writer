@@ -3,154 +3,187 @@
 
 <html>
 
-    <head>
-       <script src="//code.jquery.com/jquery-1.11.0.min.js"></script> 
-       <style>
-            body { padding:10px;font-family: Arial, Helvetica, sans-serif;}
-            .titleRow { width:100%; overflow:auto; margin:10px 0 5px 0;}
-            h1 { font-size: 14pt; }
-            h2 { font-size: 12pt; float:left; margin:0; padding:0; }
-            textarea {
-                clear:both;
-                font-family: "Courier New", Courier, monospace;
-                margin:0; 
-                padding:8px;
-                font-size:11pt;
-            }
-            input[type=submit] {font-size: 16pt;}
-            table { border-collapse:collapse; }
-            th { padding: 4px; font-size:11pt; }
-            td { padding: 4px; font-size:11pt; }
-            #inputTabs { margin: 5px 0 5px 0; }
-            #textMarked { 
-                display:none; 
-                font-family: "Courier New", Courier, monospace;
-                font-size:11pt;
-                width:900px;  
-                border:1px solid black;
-                padding:8px; 
-            }
-            #loadingDiv { display: none; width:200px; float:left; }
-            #loadingMessage div { float:left; margin:0 0 0 10px; }
-            #loadingImage img { width:18px; float:left; margin:0 0 0 10px; }
-            #outputTabs { margin:5px 0 5px 0; }
-            #xmlOutput { display:none;  }
-            p.line { margin: 0 0 4px 0; }
-            span.e { 
-                padding:2px 2px 0 2px;
-                background: #99ccff;
-                border-radius: 4px;
-            }
-            #testText { display:none; }
-        </style>
-    </head>
+	<head>
+        <title>Smart Writer</title>
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css"     > 
+        <link rel="stylesheet" type="text/css" href="jquery.qtip.css">
+        <link rel="stylesheet" type="text/css" href="lt-styles.css">
+        <script src="jquery-1.11.1.js"></script>
+        <script src="jquery.qtip.min.js"></script>
+        <script src="xsltjs/xslt.js"></script>
+	</head>
 
-    <body>
-        <h1>Smart Writer</h1>
-        <p>
-            <input type='submit' id='btnSubmitPost' value='Check Text'/>
-        </p>
-        <div class='titleRow'> 
-            <h2>Input Text</h2>
+	<body>
+        <div id='pageContent'>
+        <div id='headerRow'>
+            <h1 id='headerLeft'>Smart Writer</h1>
+            <p id='headerRight'>
+	    	</p>
         </div>
-        <div id='inputTabs'>
-            <a id='editorTab' href='javascript:showInputTab(0)'>Editor</a>
-            <a id='markupTab' href='javascript:showInputTab(1)'>Markup</a>
+		<div id='buttonRow'>
+            <select id='selectLang'>
+                <option value='en-GB'>English (GB)</option>
+                <option value='en-US'>English (US)</option>
+                <option value='de-DE'>German (DE)</option>
+            </select>
+			<input type='submit' id='btnSubmitPost' value='Check Text'/>
+	      	<div id='loadingDiv'>
+	      		<div id='loadingImage'><img  src='loading.gif' alt='loading image'/></div>
+	      		<div id='loadingMessage'>Loading...</div>
+	      	</div>
+		</div>
+        <div id='actionsRow'>
+            <a class='tab' id='editorTab' href='#' onclick='showTab("inputText")'>Editor</a>
+            <a class='tab' id='markupTab' href='#' onclick='showTab("textMarked")'>Markup</a>
+            <a class='tab' id='tableTab' href='#' onclick='showTab("xslOutput")'>Table</a>
+            <a class='tab' id='xmlTab' href='#' onclick='showTab("xmlOutput")'>XML</a>
+            <a class='tab' id='linksTab' href='#' onclick='showTab("links")'>Links</a>
+            <a class='tabRight' id='clearText' href='#' onclick='clearText()'>Clear Text</a>
         </div>
         <div id='textFields'>
-            <div id='textEditor'>
-                <textarea id='inputText' name='inputText' cols='100' rows='12'></textarea>
-            </div>
+            <textarea id='inputText' name='inputText' cols='100' rows='12'></textarea>
             <div id='textMarked'>Text markup.</div>
-        </div>
-
-        <div class='titleRow'>  
-            <h2>Results</h2>
-            <div id='loadingDiv'>
-                <div id='loadingImage'><img  src='loading.gif' alt='loading image'/></div>
-                <div id='loadingMessage'>Loading...</div>
-            </div>
-        </div>
-        <div id='outputTabs'>
-            <a id='tableTab' href='javascript:showResultsTab(0)'>Table</a>
-            <a id='xmlTab' href='javascript:showResultsTab(1)'>XML</a>
         </div>
         <div id='output'>
             <div id='xslOutput'>Results will be displayed here.</div>
             <div id='xmlOutput'>
-                <textarea cols='100' rows='12' id='outputText' readonly="readonly">Results will be displayed here.</textarea>
+		        <textarea rows='12' id='xmlOutputText' readonly="readonly">Results will be displayed here.</textarea>
             </div>
-    </body>
+        </div>
+        <div id='links'>
+            <ul>
+                <li><a target="_blank" href="https://www.languagetool.org/">www.languagetool.org</a></li>
+                <li><a target="_blank" href="https://www.danielnaber.de/">www.danielnaber.de</a></li>
+                <li><a target="_blank" href="https://github.com/languagetool-org/languagetool">LT on GitHub</a></li>
+                <li><a target="_blank" href="http://community.languagetool.org/">LT Community (Text Analysis, Rule Editor, WikiCheck)</a></li>
+                <li><a target="_blank" href="http://github.com/kimduho/nlp/wiki/Part-of-Speech-tags/">Example POS Tags</a></li>
+                <li><a target="_blank" href="http://languagetool-user-forum.2306527.n4.nabble.com/">LT User Forum</a></li>
+                <li><a target="_blank" href="http://wiki.languagetool.org/developing-robust-rules/">Developing robust rules</a></li>
+        </div>
+        </div>
+	</body>
 
-    <script type='text/javascript'>
-        var markText = 'Run check first.';
-        function showInputTab(tabId){
-           switch(tabId) {
-                case 0:
-                    $('#textMarked').css('display','none');
-                    $('#textEditor').css('display','block');
-                    break;
-                case 1:
-                    $('#textEditor').css('display','none');
-                    $('#textMarked').css('display','block');
-                    if (typeof text === 'undefined'){  
-                        $('#textMarked').html(markText);
-                    }else{
-                        $('#textMarked').html(text);
-                    }
-                    //Add the popup events to the errors
-                    $('#textMarked').find('span').each(function(){
-                        $(this).qtip({
-                            content: { text: $(this).attr('title').replace('\n','<br/>').replace(/[#]/g , ', ') },
-                            position: {
-                                my: 'bottom left',  // Position my top left...
-                                at: 'top right', // at the bottom right of...
-                                target: $(this) // my target
-                            }
-                        }) 
-                    });
-                    break;
-                default: break;
-            } 
-        };
-        function showResultsTab(tabId){
-            switch(tabId){
-                case 0:
-                    $('#xmlOutput').css('display','none');
-                    $('#xslOutput').css('display','block');
-                    break;
-                case 1:
-                    $('#xslOutput').css('display','none');
-                    $('#xmlOutput').css('display','block');
-                    break;
-                default: break;
+	<script>
+        var MARKED_TEXT = 'Run check first.';
+        var GRAMMAR_ERRORS = [];
+        var XML_ERRORS;
+
+        function setTestText(){
+            $.ajax({
+                type: 'GET',
+                dataType: 'text',
+                url: '/example.txt',
+                success: function(textfile){
+                    $("#inputText").text(textfile);
+                },
+                error: function(xhr, textStatus, error){
+                    var errorMessage = 'Error getting text.';
+                    alert(errorMessage);
+                    console.log(errorMessage);
+                }
+            });
+        }
+
+        function clearText(){
+            $('#inputText').val('');
+        }
+
+        function showTab(viewId, text){
+
+            var views = ['textMarked','inputText','xmlOutput','xslOutput','links'];
+            for(var i=0;i<views.length;i++){
+                if(views[i] != viewId) $('#'+views[i]).css('display','none');
             }
-        };
-        function addErrorMarkup(textDiv, xml){
-                
-            var $xmlObj = $( $.parseXML( xml ) );
+            $('#'+viewId).css('display','block');
+
+            if(viewId == 'textMarked'){
+                if (typeof text === 'undefined'){  
+                    $('#textMarked').html(MARKED_TEXT);
+                }else{
+                    $('#textMarked').html(text);
+                }
+                //Add the popup messages for the grammar errors
+                $('#textMarked').find('span').each(function(){
+                    var popupText = ''
+                    var arrErrIds = $(this).attr('id').split('e'); 
+                    for(var i=1;i<arrErrIds.length;i++){
+                        if(arrErrIds[i] +'' != ''){
+                            popupText += '<p>'+$(XML_ERRORS).find('error[ref="'+arrErrIds[i]+'"]').attr('msg') + '</p>';     
+                        }
+                    }
+                    $(this).qtip({
+                        content: {
+                            text: popupText
+                        },
+                        style: { classes: 'myQtipStyle' },
+                        position: {
+                            my: 'bottom left',  // Position my top left...
+                            at: 'top right', // at the bottom right of...
+                            target: $(this) // my target
+                        }
+                    }) 
+                });
+            }
+        }
+
+        function addErrorMarkup(textDiv, xmlObj){
+            
             var textLines = $(textDiv).val().replace(/(?:\r\n|\r|\n)/g, '<br/>').split('<br/>');
             var offset = 0;
             var previousLine = 0;
+           
+            var arrXmlErrors = $(xmlObj).find("error");
+            var arrMarkupIds = [];
 
-            $xmlObj.find("error").each(function(errIndex){
+            //For each error reported, insert some markup before and after the relevant position in the text
+            for(var i=0;i<arrXmlErrors.length;i++){    
+                
+                var xmlError = arrXmlErrors[i];
+               
+                var objErr = { 
+                                x: parseInt( $(xmlError).attr('fromx') ),
+                                y: parseInt( $(xmlError).attr('fromy') ),
+                                ids: [ $(xmlError).attr('ref') ]
+                             }  
 
-                //var markerStart = "<span id='e"+errIndex+"' class='e' title='"+ $(this).attr('msg') +" "+ $(this).attr('replacements') +">";
-                var replacements = "";
-                if($(this).attr('replacements').length >= 1){
-                    replacements = "\nReplacements: " + $(this).attr('replacements'); 
+                if(i>=1){
+                    var y1 = parseInt($(arrXmlErrors[i-1]).attr('fromy'));
+                    var x1 = parseInt($(arrXmlErrors[i-1]).attr('fromx'));
+                    
+                    if( y1 == objErr.y && x1 == objErr.x ){
+                        console.log('found match');
+                        arrMarkupIds[i-1].ids.push( objErr.ids[0] );
+                    }else{
+                        arrMarkupIds.push( objErr ); 
+                    }
+                }else{
+                    arrMarkupIds.push( objErr ); 
                 }
-                var markerStart = "<span id='e"+errIndex+"' class='e' title='"+ $(this).attr('msg') + " "+replacements +"'>";
-                var markerEnd ="</span>";
+            }
+            
+            var textLines = $(textDiv).val().replace(/(?:\r\n|\r|\n)/g, '<br/>').split('<br/>');
+            var offset = 0;
+            var previousLine = 0;
+            
+            for(var i=0;i<arrMarkupIds.length;i++){    
 
-                var lineIndex = parseInt( $(this).attr('fromy') ); 
+                var idAttribute = '';
+                
+                for(var j=0;j<arrMarkupIds[i].ids.length;j++){
+                    idAttribute += 'e'+arrMarkupIds[i].ids[j];
+                }
+
+                var markerStart = '<span id="' + idAttribute +'">';
+                var markerEnd ="</span>";
+                
+                var lineIndex = arrMarkupIds[i].y; 
                 if (lineIndex != previousLine) offset = 0;
                 
                 var line = textLines[lineIndex];
-                var charIndexStart = parseInt( $(this).attr('fromx') ) + offset; 
+                var charIndexStart = arrMarkupIds[i].x + offset; 
                 var charIndexEnd = charIndexStart;
                 
-                while(line.charAt(charIndexEnd).match(/\w/)){
+                while(line.charAt(charIndexEnd).match(/\w|[']/)){
                     //This is a word character, find the end of the word.
                     charIndexEnd++;
                 }
@@ -164,8 +197,9 @@
                     ].join('');
                 offset += markerStart.length + markerEnd.length;
                 previousLine = lineIndex;
-            });
+            }
             
+            //Insert html formatting for paragraphs and blank lines. 
             var markedText = '';
             for (var i = 0; i < textLines.length; i++) { 
                 if((textLines[i].trim() + "" ) == ""){
@@ -177,45 +211,47 @@
 
             return markedText;
         }
- 
-        $( document ).ready(function() {
-            //Until I get the xsl table working just display the xml. 
-            showResultsTab(1);
 
-            $( "#btnSubmitPost" ).click(function() {
-                
+		$( document ).ready(function() {
+
+            setTestText();
+
+			$( "#btnSubmitPost" ).click(function() {
+			   	
                 $("#loadingDiv").show();
 
-                var url = 'http://dev5.oak.iparadigms.com:6818';
-                $.ajax({
-                    type: 'POST',
-                    dataType: 'text',
-                    url: 'http://dev5.oak.iparadigms.com:6818',
-                    data: 'language=en-GB&text=' + encodeURIComponent( $( "#inputText" ).val() ),
-                    success: function(xml){
-                        //remove the <? xml version ... ?> tag
+			   	$.ajax({
+			  		type: 'POST',
+			  		dataType: 'text',
+			  		url: 'http://dev5.oak.iparadigms.com:6818',
+			  		data: 'language='+ $('#selectLang').val() +'&text=' + encodeURIComponent( $( "#inputText" ).val() ),
+			  		success: function(xml){
+                        /* remove the <? xml version ... ?> tag */
                         xml = xml.substr(xml.indexOf('?>')+2);  
-                        var $xmlObj = $( $.parseXML('<root>'+ xml+'</root>') );
+                        var $xmlObj = $( $.parseXML('<root>'+ xml +'</root>') );
+                        XML_ERRORS = $xmlObj; 
                         $xmlObj.find('error').each(function(index){
-                           $(this).attr('ref', index);  
+                            $(this).attr('ref', index);
                         });
+                        
                         var xmlString = $xmlObj.find('root').html().trim();
                         console.log(xmlString);
-                        $("#outputText").text(xmlString);
-                        $("#loadingDiv").hide();
-                       // new Transformation().setXml(xmlString)
-                       //     .setXslt("grammar_errors.xsl").transform("xslOutput");
-                        markText = addErrorMarkup('#inputText', xmlString);
-                        showInputTab(1, markText);
-                    },
+			  			$("#xmlOutputText").text(xmlString);
+					    $("#loadingDiv").hide();
+                        new Transformation().setXml(xmlString).setXslt("grammar_errors.xsl").transform("xslOutput");
+                        MARKED_TEXT = addErrorMarkup('#inputText', $xmlObj);
+                        showTab('textMarked', MARKED_TEXT);
+			  		},
                     error: function(xhr, textStatus, error){
                        var errorMessage = 'Error connecting to the LanguageTool server.';
                        alert(errorMessage);
                        console.log(errorMessage);
                     }
-                });
-            });   
-        });
-    </script>
+			 	});
+			});   
+
+		});
+
+	</script>
 
 </html>
