@@ -4,9 +4,13 @@
         <servlet-name>smart-writer</servlet-name>
         <servlet-class>com.rd.smartwriter.MyServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>post-servlet</servlet-name>
+        <servlet-class>com.rd.smartwriter.PostServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
-        <servlet-name>smart-writer</servlet-name>
-        <url-pattern>/smart-writer</url-pattern>
+        <servlet-name>post-servlet</servlet-name>
+        <url-pattern>/test</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>smart-writer.jsp</welcome-file>
