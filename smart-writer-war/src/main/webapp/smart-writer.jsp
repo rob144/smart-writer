@@ -16,7 +16,6 @@
 
 	<body>
         <div id='pageContent'>
-            <p id='testCheck'>TEST</p>
             <div id='headerRow'>
                 <h1 id='headerLeft'>Smart Writer</h1>
                 <p id='headerRight'>
@@ -213,29 +212,8 @@
             return markedText;
         }
 
-        function doTestCheck(){
-            $.ajax({
-                type: 'POST',
-                dataType: 'text',
-                url: '/test',
-                data: 'language='+ $('#selectLang').val() +'&text=this is some example tet with some erors.',
-                success: function(result){
-                    console.log("result: " + result);
-                    $("#testCheck").html(result);
-                },
-                error: function(xhr, textStatus, error){
-                    var errorMessage = 'Error connecting to the LanguageTool server.';
-                    alert(errorMessage);
-                    console.log(errorMessage);
-                }
-            });
-            
-        }
-
 		$( document ).ready(function() {
             
-            doTestCheck();
-
             setTestText();
 
 			$( "#btnSubmitPost" ).click(function() {
@@ -245,7 +223,7 @@
 			   	$.ajax({
 			  		type: 'POST',
 			  		dataType: 'text',
-			  		url: 'http://dev5.oak.iparadigms.com:6818',
+			  		url: '/test',
 			  		data: 'language='+ $('#selectLang').val() +'&text=' + encodeURIComponent( $( "#inputText" ).val() ),
 			  		success: function(xml){
                         /* remove the <? xml version ... ?> tag */
