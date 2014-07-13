@@ -13,9 +13,9 @@ import javax.servlet.http.HttpServletResponse;
 public class PostServlet extends HttpServlet  {
   @Override
   public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-      //TODO: handle a post request, get text as a post parameter 
+      String lang = req.getParameter("language");
       String text = req.getParameter("text");
       resp.setContentType("text/html");
-      resp.getWriter().print( LTMain.doCheck(text) );
+      resp.getWriter().print( LTMain.doCheck(lang, text) );
   }
 }

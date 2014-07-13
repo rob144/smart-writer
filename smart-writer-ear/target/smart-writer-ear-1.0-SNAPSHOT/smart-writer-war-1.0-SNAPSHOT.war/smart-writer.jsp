@@ -16,7 +16,6 @@
 
 	<body>
         <div id='pageContent'>
-            <p id='testCheck'>TEST</p>
             <div id='headerRow'>
                 <h1 id='headerLeft'>Smart Writer</h1>
                 <p id='headerRight'>

@@ -12,19 +12,16 @@ public class LTMain
 {
     private static final int CONTEXT_SIZE = 40; // characters
 
-    public static String doCheck(String text) throws IOException
+    public static String doCheck(String langCode, String text) throws IOException, InstantiationException, IllegalAccessException
     {   
         String strResults = "";
-        Language lang = new BritishEnglish();
+        //langCode e.g. en-GB, en-US.
+        Language lang = Language.getLanguageForShortName(langCode).getClass().newInstance();
         JLanguageTool langTool = new JLanguageTool(lang);
         langTool.activateDefaultPatternRules();
         List<RuleMatch> matches = langTool.check(text);
         final RuleAsXmlSerializer serializer = new RuleAsXmlSerializer();
         final String xmlResponse = serializer.ruleMatchesToXml(matches, text, CONTEXT_SIZE, lang);
-        //for (RuleMatch match : matches) {
-        //    strResults += match.getLine() + ", column " + match.getColumn() + ": " + match.getMessage();
-        //    strResults += match.getSuggestedReplacements();
-        //}   
         return xmlResponse;
     }   
 }
