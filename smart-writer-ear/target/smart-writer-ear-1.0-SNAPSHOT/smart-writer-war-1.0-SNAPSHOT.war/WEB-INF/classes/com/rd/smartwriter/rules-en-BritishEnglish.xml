@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rules lang="en" xsi:noNamespaceSchemaLocation="../../../../../../../../../languagetool-core/src/main/resources/org/languagetool/rules/rules.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <category name="MyRules" type="grammar">
+      <rule id="WITH_TO" name="With (missing word?) to">
+        <pattern>
+          <token>with</token>
+          <token>to</token>
+        </pattern>
+        <message>Are you missing a word between 'with' and 'to'?</message>
+        <short>Missing word</short>
+        <example type="correct">He went with James to see the doctor.</example>
+        <example type="incorrect" correction="with James to">He went <marker>with to</marker> see the doctor.</example>
+      </rule>
+    </category>
+</rules>
