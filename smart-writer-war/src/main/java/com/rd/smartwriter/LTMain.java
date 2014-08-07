@@ -26,11 +26,11 @@ public class LTMain
         //langCode e.g. en-GB, en-US.
         Language lang = Language.getLanguageForShortName(langCode).getClass().newInstance();
         JLanguageTool langTool = new JLanguageTool(lang);
-       
+
         try {
             PatternRuleLoader ruleLoader = new PatternRuleLoader();
             List<PatternRule> myRules = ruleLoader.getRules(
-                LTMain.class.getResourceAsStream("/com/rd/smartwriter/" + RULES_FILENAME), RULES_FILENAME);
+                LTMain.class.getResourceAsStream(RULES_FILENAME), RULES_FILENAME);
             for (PatternRule rule : myRules) {
                 langTool.addRule(rule);
             }

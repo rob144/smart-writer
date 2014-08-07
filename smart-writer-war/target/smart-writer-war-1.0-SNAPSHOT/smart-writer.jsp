@@ -6,7 +6,7 @@
 
 	<head>
         <title>Smart Writer</title>
-        <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css"     > 
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css"> 
         <link rel="stylesheet" type="text/css" href="jquery.qtip.css">
         <link rel="stylesheet" type="text/css" href="sm-styles.css">
         <script src="jquery-1.11.1.js"></script>
@@ -35,15 +35,22 @@
                 </div>
             </div>
             <div id='actionsRow'>
-                <a class='tab' id='editorTab' href='#' onclick='showTab("inputText")'>Editor</a>
-                <a class='tab' id='markupTab' href='#' onclick='showTab("textMarked", getPageText(MARKED_TEXT,1))'>Markup</a>
-                <a class='tab' id='tableTab' href='#' onclick='showTab("xslOutput")'>Table</a>
-                <a class='tab' id='xmlTab' style='display:none;' href='#' onclick='showTab("xmlOutput")'>XML</a>
-                <a class='tabRight' id='clearText' href='#' onclick='clearText()'>Clear Text</a>
+                <a class='tab' id='editorTab' href='#' onclick='showTab("inputText");'>Editor</a>
+                <a class='tab' id='markupTab' href='#' onclick='showTab("textMarked", getPageText(MARKED_TEXT,1));'>Markup</a>
+                <a class='tab' id='tableTab' href='#' onclick='showTab("xslOutput");'>Error List</a>
+                <a class='tab' id='xmlTab' href='#' onclick='showTab("xmlOutput");'>XML</a>
+                <a class='tabRight' id='clearText' href='#' onclick='clearText();'>Clear Text</a>
+                <div class='tabRight' id='pagination' href='#'>
+                    <a href='#' onclick='showTab("textMarked", getPageText(MARKED_TEXT, CURRENT_PAGE - 1));'> < </a>
+                    <div id='pageXofY'>Page X of Y</div>
+                    <a href='#' onclick='showTab("textMarked", getPageText(MARKED_TEXT, CURRENT_PAGE + 1));'> > </a>
+                </div>
             </div>
             <div id='textFields'>
                 <textarea id='inputText' name='inputText' cols='100' rows='20'></textarea>
-                <div id='textMarked'>Text markup.</div>
+                <div id='textMarkedOuter'>
+                    <div id='textMarked'>Text markup.</div>
+                </div>
                 <div id='output'>
                     <div id='xslOutput'>Results will be displayed here.</div>
                     <div id='xmlOutput'>

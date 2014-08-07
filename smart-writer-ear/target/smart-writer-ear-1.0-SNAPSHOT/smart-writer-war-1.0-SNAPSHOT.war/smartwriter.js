@@ -1,5 +1,8 @@
 var MARKED_TEXT = ['Run check first.'];
 var XML_ERRORS;
+var MAX_PAGE_LINES = 50;
+var CURRENT_PAGE = 1;
+var TOTAL_PAGES;
 
 function setTestText(){
     $.ajax({
@@ -23,19 +26,30 @@ function clearText(){
 
 function showTab(viewId, text){
 
-    var views = ['textMarked','inputText','xmlOutput','xslOutput','links'];
+console.log("showTab text: \n" + text );
+
+    var views = ['textMarkedOuter','inputText','xmlOutput','xslOutput','links'];
     for(var i=0;i<views.length;i++){
         if(views[i] != viewId) $('#'+views[i]).css('display','none');
     }
     $('#'+viewId).css('display','block');
 
     if(viewId == 'textMarked'){
+        $('#textMarkedOuter').css('display','block');
+        
         if (typeof text === 'undefined'){  
             $('#textMarked').html(MARKED_TEXT);
         }else{
-            $('#textMarked').html(text);
-            prepareErrorPopups();
+            if(TOTAL_PAGES >= 1){
+                $('#textMarked').html(text);
+                $('#pageXofY').text('Page ' + CURRENT_PAGE + ' of ' + TOTAL_PAGES);
+                $('#pageXofY').css('display','inline');
+                $('#pagination').css('display','block');
+                prepareErrorPopups();
+            }
         }
+    }else{
+        $('#pagination').css('display','none');
     }
 }
 
@@ -151,13 +165,26 @@ function addErrorMarkup(textDiv, xmlObj){
 }
 
 function getPageText(markedLines, pageNumber){
-    var MAX_PAGE_LINES = 50;
+    
     var pageText = "";
-    for(var i = 0; i < markedLines.length && i < MAX_PAGE_LINES; i++){
-        console.log('i: ' + i);
+    CURRENT_PAGE = pageNumber;
+
+console.log("Page number: " + pageNumber);
+console.log("Lines: " + markedLines.length);
+    
+    var position = (pageNumber - 1) * MAX_PAGE_LINES;
+
+console.log("position: " + position );
+
+    for(var i = position; i < markedLines.length && i < position + MAX_PAGE_LINES; i++){
         pageText += markedLines[i];
     }
+
     return pageText;
+}
+
+function getTotalPages(markedLines){
+    TOTAL_PAGES = Math.ceil(markedLines.length / MAX_PAGE_LINES);
 }
 
 $( document ).ready(function() {
@@ -188,6 +215,7 @@ $( document ).ready(function() {
                 $("#loadingDiv").hide();
                 new Transformation().setXml(xmlString).setXslt("grammar_errors.xsl").transform("xslOutput");
                 MARKED_TEXT = addErrorMarkup('#inputText', $xmlObj);
+                getTotalPages(MARKED_TEXT);
                 showTab('textMarked', getPageText(MARKED_TEXT, 1));
             },
             error: function(xhr, textStatus, error){

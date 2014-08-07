@@ -29,9 +29,14 @@
 
     <dependencies>
         <dependency>
-        <groupId>org.languagetool</groupId>
-        <artifactId>language-en</artifactId>
-        <version>2.6</version>
+            <groupId>org.languagetool</groupId>
+            <artifactId>language-en</artifactId>
+            <version>2.6</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.appengine.tools</groupId>
+            <artifactId>appengine-gcs-client</artifactId>
+            <version>RELEASE</version>
         </dependency>
     </dependencies>
 

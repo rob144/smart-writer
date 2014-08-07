@@ -34,19 +34,29 @@ th { padding: 4px; font-size:11pt; }
 td { padding: 4px; font-size:11pt; }
 #actionsRow { margin: 5px 0 5px 0; }
 a.tab { margin: 0 10px 5px 0; } 
-a.tabRight { float:right; margin:0 0 0 5px; }
+.tabRight { float:right; margin:0 0 0 5px; }
+#pagination { display:none; }
+#clearText { display:none; }
+#xmlTab { display:none; }
 #inputText {
     display:block; 
     width:800px;             
+}
+#textMarkedOuter {
+    display:none;
+    padding:10px 0 0 0;
+    background-color:grey;
 }
 #textMarked { 
     display:none; 
     font-family: "Courier New", Courier, monospace;
     font-size:11pt;
-    width:780px;  
+    width:700px;  
     min-height:250px;
+    margin:0px auto 5px auto;
     border:1px solid black;
-    padding:8px; 
+    padding:40px; 
+    background-color:white;
 }
 #textMarked span {
     padding:2px 2px 0 2px;
@@ -90,4 +100,5 @@ max-width:300px;
 }
 .popup p {
     margin:0;
+    font-family:"Times New Roman",Georgia,Serif;
 }
