@@ -1,4 +1,2 @@
-appengine-skeleton
-=============================
-
-This is a generated application from the appengine-skeleton archetype.
+# smart-writer 
+Writing analylsis and grammar checking web app
