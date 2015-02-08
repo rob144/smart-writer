@@ -1,0 +1,150 @@
+@CHARSET "UTF-8";
+.pageMainContent {
+	overflow:auto;
+	position:relative;
+	width:800px;
+	margin:0 auto 0 auto;
+}
+#devTools{
+	float:right;
+	width:380px;
+	position:relative;
+}
+#fontSize {
+	display: inline-block;
+	margin: 0 20px 0 0;
+}
+#moveCursor{
+	display: inline-block;
+}
+#fsDown, #fsUp {
+	cursor:pointer;
+}
+#cursorLeft, #cursorRight {
+	cursor:pointer;
+}
+#debugLog{
+	float:right;
+	width:380px;
+	height:298px;
+	margin:5px 0 0 0;
+	overflow:auto;
+	border:1px solid grey;
+}
+#debugLog .entry{
+	margin:0 2px 0 2px;
+	font-size:11px;
+}
+#ghostInput{
+	display:block;
+	width:380px;
+	margin:5px 0 0 0;
+	border:1px solid green;
+	background:none;
+}
+#textPreparer{
+	width:380px;
+	height:20px;
+	margin:5px 0 0 0;
+	border:1px solid green;
+}
+#textInputLoseFocus{
+	display:block;
+	width:380px;
+	margin:5px 0 0 0;
+	border:1px solid green;
+	background:none;
+}
+#textEditorPanel{
+	float:left;
+	width:402px;
+}
+#editorTopMeasure{
+	margin:0 0 2px 0;
+	border:1px solid black;
+}
+#textEditorContainer{
+	padding:1px;
+	background-color:grey;
+	overflow:auto;
+}
+#textEditorOuter{
+	padding:1px;
+	background-color:rgb(226, 184, 76);
+	overflow:auto;
+}
+#textEditor{
+	position:relative;
+	margin:0px;
+	padding:0px;
+	font-size:15px;
+	height:350px;
+	word-wrap: break-word;
+	background-color:white;
+	overflow-y:auto;
+}
+#textEditorCloneContainer{
+	clear:both;
+	margin:5px 0 0 0;
+	float:left;
+	width:100%;
+}
+#textEditorCloneOuter{
+	margin:5px 0 0 0;
+	padding:1px;
+	background-color:rgb(226, 184, 76);
+	overflow:auto;
+}
+#textEditorClone{
+	position:relative;
+	margin:0px;
+	padding:0px;
+	font-size:15px;
+	height:40px;
+	word-wrap: break-word;
+	background-color:white;
+	overflow-y:auto;
+}
+#arrCharsContent{
+	clear:both;
+	margin:5px 0 0 0;
+	float:left;
+	width:100%;
+}
+.chrElem{
+	display:inline-block;
+	margin:0px;
+	padding:0px;
+}
+#contentBefore{
+	display:inline-block;
+	background-color:blue;
+	color:white;
+}
+#cursor, #cursorClone{
+	position:absolute;
+	width:1px;
+	border-right:1px solid red;
+}
+#message{
+	float:left;
+	text-align:left;
+	margin:5px 0 30px 0;
+	width:29%;
+}
+#mousePosition{
+	float:right;
+	text-align:right;
+	margin:5px 0 30px 5px;
+	width:34%;
+}
+#cursorPosition{
+	float:right;
+	text-align:right;
+	margin:5px 0 30px 5px;
+	width:34%;
+}
+#cursorPosLabel, #mousePosLabel{
+	display:inline-block;
+	float:left;
+}
