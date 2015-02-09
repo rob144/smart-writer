@@ -104,6 +104,13 @@ function docKeyDown(e){
     if(preventBackspace(e)) e.preventDefault();
 }
 
+function docMouseMove(e){
+	$('#mouseCoords').text(
+		'['+roundAndFix(e.clientX - $editor.offset().left, 1) + ', ' +
+		roundAndFix(e.clientY - $editor.offset().top, 1) + ']'
+	);
+}
+
 function editorMouseMove(e){
 	$('#mouseCoords').text(
 		'['+roundAndFix(e.clientX - $editor.offset().left, 1) + ', ' +
@@ -242,12 +249,11 @@ function removeCharFromEditor(){
 		
 		var chunkStartPos = findCharChunkStartPos();	
 		var chunk = arrChars.slice(chunkStartPos, cursorIndex).join('');
-		
+
 		//Check if the current word will jump back to previous line
 		if(isNewlineIndex(chunkStartPos)){
 			$line = measureContent( getLine(chunkStartPos-1) + chunk);
-			log('LINE WIDTH: '+$line.width());
-			if($line.width() < $editor.width()){
+			if($line.width() > 0 && $line.width() < $editor.width()){
 				setCursorPostion(top - 20, $editor.offset().left + $line.width());
 				removeNewlineIndex(chunkStartPos);
 			}			
@@ -411,7 +417,7 @@ function findCharChunkStartPos(){
 	var chunkStart = -1;
 	//Track back until find a space then mark the position.
 	for(var i = cursorIndex - 1; i > 0; i--){
-		log('i = ' + i + ' ' + arrChars[i]);
+		//log('i = ' + i + ' ' + arrChars[i]);
 		if(arrChars[i] == ' '){
 			log('newline at: ' + i);
 			chunkStart = i + 1;
@@ -424,7 +430,7 @@ function findCharChunkStartPos(){
 function findPrevLineBreakPos(){
 	//Track back until find a space then mark the position.
 	for(var i = cursorIndex - 1; i > 0; i--){
-		log('i = ' + i + ' ' + arrChars[i]);
+		//log('i = ' + i + ' ' + arrChars[i]);
 		if(arrChars[i] == ' '){
 			log('newline at: ' + i);
 			addNewLineIndex(i + 1, true);
@@ -480,6 +486,8 @@ function log(info){
 	console.log('[' + getTimeNow() + '] ' + info);
 	$('<p class="entry">['+ getTimeNow() + '] ' 
 			+ info + '</p>').appendTo($('#debugLog'));
+	var logDiv = document.getElementById("debugLog");
+	logDiv.scrollTop = logDiv.scrollHeight;
 }
 
 function getTimeNow(){
