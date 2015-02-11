@@ -51,7 +51,7 @@
 				<div id="textEditorClone"></div>
 			</div>
 		</div>
-		<textarea id="arrCharsContent"></textarea>
+		<div id="arrCharsContent"></div>
 	</div>
 </body>
 

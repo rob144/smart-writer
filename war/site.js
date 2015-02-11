@@ -250,17 +250,21 @@ function removeCharFromEditor(){
 		var chunkStartPos = findCharChunkStartPos();	
 		var chunk = arrChars.slice(chunkStartPos, cursorIndex).join('');
 
+		log('chunk: ' + chunk);
+
 		//Check if the current word will jump back to previous line
 		if(isNewlineIndex(chunkStartPos)){
 			$line = measureContent( getLine(chunkStartPos-1) + chunk);
 			if($line.width() > 0 && $line.width() < $editor.width()){
 				setCursorPostion(top - 20, $editor.offset().left + $line.width());
+				log('RNLI 1');
 				removeNewlineIndex(chunkStartPos);
 			}			
 		}
 		
 		//If cursorIndex was a newline remove it
 		if(isNewlineIndex(cursorIndex - 1)){
+			log('RNLI 2');
 			removeNewlineIndex(cursorIndex - 1);
 			setCursorPostion(top - 20, $editor.offset().left);
 		}
@@ -276,7 +280,8 @@ function addCharToEditor(chr){
 	
 	arrChars.push(chr);
 	cursorIndex++;
-	
+	printArrChars();
+
 	//Need to know where the cursor is: e.g. index in char array to insert or append char.
 	//When the cursor is moved manually the index should adjust
 	//On a click event the index would have to be adjusted via geometry calculations e.g. find line, then nearest char position.
@@ -455,10 +460,22 @@ function measureContent(content){
 
 function printArrChars(){
 	var strChars = '';
-	for(var i=0; i< arrChars.length; i++){
-		strChars += '[' + arrChars[i] + ']';
+	var tableId = 'debugCharTable';
+	
+	if( !$('#' + tableId).length ) {
+		$('#arrCharsContent').html('<table id="' + tableId + '"><tbody></tbody></table>');
 	}
-	$('#arrCharsContent').val(strChars);
+	
+	html = '<tr>';
+	for(var i=0; i< arrChars.length; i++){
+		if(isNewlineIndex(i)){
+			if(i>=1) html += '</tr>';
+			html += '<tr>';
+		}
+		html += '<td>' + arrChars[i] + '</td>';	
+	}
+	html += '</tr>';
+	$('#' + tableId + ' > tbody:last').html(html);
 }
 
 /*************************************************************************** 
