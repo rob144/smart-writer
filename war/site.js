@@ -253,7 +253,8 @@ function removeCharFromEditor(){
 		log('chunk: ' + chunk);
 
 		//Check if the current word will jump back to previous line
-		if(isNewlineIndex(chunkStartPos)){
+		//This needs to check if the newline is a wrapped newline not a manual line break.
+		if(isWrapBreakIndex(chunkStartPos)){
 			$line = measureContent( getLine(chunkStartPos-1) + chunk);
 			if($line.width() > 0 && $line.width() < $editor.width()){
 				setCursorPostion(top - 20, $editor.offset().left + $line.width());
@@ -280,8 +281,7 @@ function addCharToEditor(chr){
 	
 	arrChars.push(chr);
 	cursorIndex++;
-	printArrChars();
-
+	
 	//Need to know where the cursor is: e.g. index in char array to insert or append char.
 	//When the cursor is moved manually the index should adjust
 	//On a click event the index would have to be adjusted via geometry calculations e.g. find line, then nearest char position.
@@ -290,6 +290,7 @@ function addCharToEditor(chr){
     var top = $cursor.offset().top;
     renderEditorContent();
     calcNewCursorPos(top);
+    printArrChars();
 }
 
 function addManualLineBreak(){
@@ -338,6 +339,7 @@ function calcNewCursorPos(currentCursorPosTop){
 			$contentBefore = getContentBeforeCursor();
 			cursorPosLeft = parseInt($contentBefore.offset().left + $contentBefore.width());
 		}else{
+			alert('Adding New Line Index');
 			addNewLineIndex(cursorIndex, true);
 			cursorPosLeft = $editor.offset().left + 1;
 		}
@@ -411,6 +413,17 @@ function isNewlineIndex(charIndex){
 	var result = false;
 	for(var i = 0; i < newLineIndexes.length; i++){
 		if(charIndex == newLineIndexes[i].index){
+			result = true;
+			break;
+		}
+	}
+	return result
+}
+
+function isWrapBreakIndex(charIndex){
+	var result = false;
+	for(var i = 0; i < newLineIndexes.length; i++){
+		if(charIndex == newLineIndexes[i].index && newLineIndexes[i].isWrapBreak){
 			result = true;
 			break;
 		}
