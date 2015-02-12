@@ -2,6 +2,11 @@
 Writing analylsis and grammar checking web app
 
 # Notes
+
+To run dev server on port 8080
+
+    ant runserver
+
 To run the update command to deploy
 
     cd smart-writer
