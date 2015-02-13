@@ -63,7 +63,7 @@ function initMeasure(){
 function initCursor(){
 	$cursor.height(16);
 	setCursorPostion($editor.offset().top + 3, $editor.offset().left);
-	setInterval ('cursorAnimation()', 400);
+	//setInterval ('cursorAnimation()', 400);
 }
 
 /*************************************************************************** 
@@ -149,6 +149,8 @@ function editorKeyDown(e){
 		document.getElementById(INPUT_ID).focus();
 		inputKeydown({'keyCode': e.keyCode});
 	}
+
+	$('#cursorCoords').text(getCursorPos());
 }
 
 function prepareToPaste(e){
@@ -167,7 +169,9 @@ function inputKeydown(e){
     	}
 		$textPreparer.html('');
 		$input.val('');
+		$('#cursorCoords').text(getCursorPos());
     }, 3);
+
 }
 
 function editorPaste(e){
@@ -250,22 +254,18 @@ function removeCharFromEditor(){
 		var chunkStartPos = findCharChunkStartPos();	
 		var chunk = arrChars.slice(chunkStartPos, cursorIndex).join('');
 
-		log('chunk: ' + chunk);
-
 		//Check if the current word will jump back to previous line
 		//This needs to check if the newline is a wrapped newline not a manual line break.
 		if(isWrapBreakIndex(chunkStartPos)){
 			$line = measureContent( getLine(chunkStartPos-1) + chunk);
 			if($line.width() > 0 && $line.width() < $editor.width()){
 				setCursorPostion(top - 20, $editor.offset().left + $line.width());
-				log('RNLI 1');
 				removeNewlineIndex(chunkStartPos);
 			}			
 		}
 		
 		//If cursorIndex was a newline remove it
 		if(isNewlineIndex(cursorIndex - 1)){
-			log('RNLI 2');
 			removeNewlineIndex(cursorIndex - 1);
 			setCursorPostion(top - 20, $editor.offset().left);
 		}
@@ -273,7 +273,7 @@ function removeCharFromEditor(){
 		cursorIndex--;
 		calcNewCursorPos();
 		printArrChars();
-		//logCursorPos();
+		logCursorPos();
 	}
 }
 
@@ -328,7 +328,7 @@ function calcNewCursorPos(currentCursorPosTop){
 	var $contentBefore = getContentBeforeCursor();
 	
 	cursorPosTop = currentCursorPosTop;
-	cursorPosLeft = parseInt($contentBefore.offset().left + $contentBefore.width()) + 1;
+	cursorPosLeft = parseInt($editor.offset().left + $contentBefore.width());
 	
 	//Check if we will move to next line
 	if( $contentBefore.width() > $editor.width() ) {
@@ -339,12 +339,14 @@ function calcNewCursorPos(currentCursorPosTop){
 			$contentBefore = getContentBeforeCursor();
 			cursorPosLeft = parseInt($contentBefore.offset().left + $contentBefore.width());
 		}else{
-			alert('Adding New Line Index');
 			addNewLineIndex(cursorIndex, true);
-			cursorPosLeft = $editor.offset().left + 1;
+			cursorPosLeft = $editor.offset().left;
 		}
 		cursorPosTop += 20;//TODO: adapt line height to font size.
 	}
+	//Deal with layout change due to browser scrollbar appearing/disappearing
+	if(cursorPosLeft < $editor.offset().left) cursorPosLeft = $editor.offset().left;
+
 	setCursorPostion(cursorPosTop, cursorPosLeft);
 }
 
@@ -435,9 +437,7 @@ function findCharChunkStartPos(){
 	var chunkStart = -1;
 	//Track back until find a space then mark the position.
 	for(var i = cursorIndex - 1; i > 0; i--){
-		//log('i = ' + i + ' ' + arrChars[i]);
 		if(arrChars[i] == ' '){
-			log('newline at: ' + i);
 			chunkStart = i + 1;
 			break;
 		}
@@ -448,9 +448,7 @@ function findCharChunkStartPos(){
 function findPrevLineBreakPos(){
 	//Track back until find a space then mark the position.
 	for(var i = cursorIndex - 1; i > 0; i--){
-		//log('i = ' + i + ' ' + arrChars[i]);
 		if(arrChars[i] == ' '){
-			log('newline at: ' + i);
 			addNewLineIndex(i + 1, true);
 			break;
 		}
