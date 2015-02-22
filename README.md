@@ -1,7 +1,7 @@
 # smart-writer 
 Writing analylsis and grammar checking web app
 
-# Notes
+**Notes**
 
 To run dev server on port 8080
 
