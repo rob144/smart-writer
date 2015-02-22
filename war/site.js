@@ -42,6 +42,7 @@ $( document ).ready(function() {
 	
 	initCursor();
 	initMeasure();
+	initDevTools();
 });
 
 /*************************************************************************** 
@@ -64,6 +65,37 @@ function initCursor(){
 	$cursor.height(16);
 	setCursorPostion($editor.offset().top + 3, $editor.offset().left);
 	//setInterval ('cursorAnimation()', 400);
+}
+
+function initDevTools(){
+	
+	var $elem = $('#dev-tools');
+	var elemWidth = $elem.width();
+
+	console.log('hey');
+
+	$('#toggle-dev-tools').click( function(){ 
+		console.log('W: ' + $elem.width());
+		if($elem.width() <= 0){
+			console.log('less');
+			$elem.css('border-color','grey');
+			$elem.animate(
+				{ width: elemWidth },
+				{ duration:500 }
+			).show();
+		}else{
+			console.log('test');
+			$elem.animate(
+				{ width: 0 }, 
+				{ duration:500, 
+					complete: function(){ 
+						$elem.css('border-color','#fff');
+						console.log('finished') ;
+					} 
+				}
+			);
+		}
+	} );	
 }
 
 /*************************************************************************** 
@@ -469,6 +501,10 @@ function measureContent(content){
 	return $htmlElem;
 }
 
+/*************************************************************************** 
+HELPER METODS 
+****************************************************************************/
+
 function printArrChars(){
 	var strChars = '';
 	var tableId = 'debugCharTable';
@@ -488,10 +524,6 @@ function printArrChars(){
 	html += '</tr>';
 	$('#' + tableId + ' > tbody:last').html(html);
 }
-
-/*************************************************************************** 
-HELPER METODS 
-****************************************************************************/
 
 function toCodeString(str){
 	var codeString = '';

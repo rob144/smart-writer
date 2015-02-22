@@ -5,10 +5,30 @@
 	width:800px;
 	margin:0 auto 0 auto;
 }
-#devTools{
-	float:right;
-	width:380px;
-	position:relative;
+#main-top-menu {
+	background-color: grey;
+	padding: 2px 6px;
+	text-align: right;
+}
+#main-top-menu a{
+	color: #fff;
+}
+#dev-tools {
+	width:400px;
+	position:absolute;
+	top:30px;
+	right:0px;
+	border:1px solid grey;
+	border-radius: 4px;
+}
+#dev-tools-inner {
+	overflow-y:auto;
+	overflow-x:hidden;
+	margin:5px;
+	background-color: #fff;
+}
+#topTools {
+	width:300px;
 }
 #fontSize {
 	display: inline-block;
@@ -24,7 +44,7 @@
 	cursor:pointer;
 }
 #debugLog{
-	float:right;
+	float:left;
 	width:380px;
 	height:298px;
 	margin:5px 0 0 0;
@@ -87,7 +107,7 @@
 	clear:both;
 	margin:5px 0 0 0;
 	float:left;
-	width:100%;
+	width:380px;
 }
 #textEditorCloneOuter{
 	margin:5px 0 0 0;
@@ -107,9 +127,12 @@
 }
 #arrCharsContent{
 	clear:both;
+	overflow-x:scroll;
 	margin:5px 0 0 0;
 	float:left;
-	width:100%;
+	width:380px;
+	height: 90px;
+	border:1px solid rgb(226, 184, 76);
 }
 .chrElem{
 	display:inline-block;

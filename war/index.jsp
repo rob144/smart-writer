@@ -11,23 +11,39 @@
 </head>
 
 <body>
-	<div class="pageMainContent">
-		<h1>HTML Text Editor</h1>
-		<div id="home">
-			<div id="devTools">
-				<div id="topTools">
-					<span id="fontSize">
-						<a id="fsDown">- </a>font size<a id="fsUp"> +</a>
-					</span>
-					<span id="moveCursor">
-						<a id="cursorLeft">< </a>cursor<a id="cursorRight"> ></a>
-					</span>
-				</div>
-				<input type="text" id="ghostInput" placeholder="ghost input"/>
-				<div id="textPreparer"></div>
-				<input type="text" id="textInputLoseFocus" maxlength="0" placeholder="lose focus"/>
-				<div id="debugLog"></div>
+
+	<div id='main-top-menu'>
+		<a id='toggle-dev-tools' href='#'>dev tools</a>
+	</div>
+
+	<div id="dev-tools">
+		<div id="dev-tools-inner">
+		<div id="topTools">
+			<span id="fontSize">
+				<a id="fsDown">- </a>font size<a id="fsUp"> +</a>
+			</span>
+			<span id="moveCursor">
+				<a id="cursorLeft">< </a>cursor<a id="cursorRight"> ></a>
+			</span>
+		</div>
+		<input type="text" id="ghostInput" placeholder="ghost input"/>
+		<div id="textPreparer"></div>
+		<input type="text" id="textInputLoseFocus" maxlength="0" placeholder="lose focus"/>
+		<div id="debugLog"></div>
+		<div id="textEditorCloneContainer">
+			<div id="textEditorCloneOuter">
+				<div id="textEditorClone"></div>
 			</div>
+		</div>
+		<div id="arrCharsContent"></div>
+		</div>
+	</div>
+
+	<div class="pageMainContent">
+		
+		<h1>Smart Writer</h1>
+		
+		<div id="home">
 			<div id="textEditorPanel">
 				<canvas id="editorTopMeasure" width="400" height="10"></canvas>
 				<div id="textEditorContainer">
@@ -46,12 +62,7 @@
 				</div>	
 			</div>
 		</div>
-		<div id="textEditorCloneContainer">
-			<div id="textEditorCloneOuter">
-				<div id="textEditorClone"></div>
-			</div>
-		</div>
-		<div id="arrCharsContent"></div>
+		
 	</div>
 </body>
 
